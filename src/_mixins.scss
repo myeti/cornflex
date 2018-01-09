@@ -1,0 +1,126 @@
+//
+// Cornflex mixins
+//
+
+
+// generate everything
+@mixin cornflex() {
+
+  // base rules
+  @include cornflex-base();
+
+  // mobile first rules
+  @include cornflex-row();
+  @include cornflex-col();
+
+  // responsive rules
+  @each $breakpoint, $breakpoint-value in $cornflex-breakpoints {
+    @media (min-width: $breakpoint-value) {
+      @include cornflex-container($breakpoint, $breakpoint-value);
+      @include cornflex-row($breakpoint);
+      @include cornflex-col($breakpoint);
+    }
+  }
+
+}
+
+
+// generate base rules needed only once
+@mixin cornflex-base() {
+
+  // box sizing
+  .container, [class*="container-"],
+  .row, .col, [class*="col-"] {
+    box-sizing: border-box;
+  }
+
+  // container
+  .container, [class*="container-"] {
+    padding: 0 $cornflex-gutter;
+    margin: auto;
+  }
+
+  // row
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    &-rtl { flex-direction: row-reverse }
+  }
+
+}
+
+
+// generate container rules for a specific breakpoint
+@mixin cornflex-container($breakpoint: null, $breakpoint-value: 0) {
+  @if($breakpoint-value > 0) {
+    .container#{$breakpoint} { max-width: $breakpoint-value }
+  }
+}
+
+
+// generate row rules for a specific breakpoint
+@mixin cornflex-row($breakpoint: null) {
+  .row {
+
+    // justify
+    &-left#{$breakpoint} { justify-content: flex-start }
+    &-center#{$breakpoint} { justify-content: center }
+    &-right#{$breakpoint} { justify-content: flex-end }
+    &-between#{$breakpoint} { justify-content: space-between }
+    &-around#{$breakpoint} { justify-content: space-around }
+
+    // align
+    &-top#{$breakpoint} { align-items: flex-start }
+    &-middle#{$breakpoint} { align-items: center }
+    &-bottom#{$breakpoint} { align-items: flex-end }
+
+    // gutter
+    &-gutter#{$breakpoint} {
+      margin: 0 -#{$cornflex-gutter-half};
+      .col, [class*="col-"] {
+        padding: 0 $cornflex-gutter-half;
+      }
+    }
+
+  }
+}
+
+
+// generate col rules for a specific breakpoint
+@mixin cornflex-col($breakpoint: null) {
+  .col {
+
+    // fluid
+    &#{$breakpoint} {
+      flex-grow: 1;
+      max-width: 100%;
+    }
+
+    // sized
+    @for $i from 1 through $cornflex-cols {
+      $col-width: 100% / $cornflex-cols * $i;
+      &-#{$i}#{$breakpoint} {
+        flex-basis: $col-width;
+        max-width: $col-width;
+      }
+    }
+
+    // order
+    @for $i from 1 through $cornflex-cols {
+      &-nth-#{$i}#{$breakpoint} { order: $i }
+    }
+
+    // shift
+    @for $i from 0 through $cornflex-cols {
+      &-shift-#{$i}#{$breakpoint} {
+        margin-left: 100% / $cornflex-cols * $i;
+      }
+    }
+
+    // align
+    &-top#{$breakpoint} { align-self: flex-start }
+    &-middle#{$breakpoint} { align-self: center }
+    &-bottom#{$breakpoint} { align-self: flex-end }
+
+  }
+}

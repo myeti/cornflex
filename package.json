@@ -1,0 +1,20 @@
+{
+  "name": "cornflex",
+  "version": "1.0.0",
+  "description": "Cornflex - Lightweight CSS flexbox grid framework",
+  "author": "Aymeric Assier <aymeric.assier@gmail.com>",
+  "homepage": "https://myeti.github.io/cornflex",
+  "licence": "MIT",
+  "main": "gruntfile.js",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-cssmin": "^1.0.2",
+    "grunt-contrib-watch": "^1.0.0",
+    "time-grunt": "^1.4.0"
+  },
+  "scripts": {
+    "start": "grunt live",
+    "build": "grunt build"
+  }
+}

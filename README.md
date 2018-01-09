@@ -1,11 +1,11 @@
 # Cornflex
 
-Lightweight CSS flexbox grid framework (8ko).
+Lightweight CSS flexbox grid framework (8ko)
 
 
 ## Rules
 
-Include `dist/cornflex.min.css` in your page, browse `dist/index.html` for examples.
+Include `dist/cornflex.min.css` in your page, see [myeti.github.io/cornflex](https://myeti.github.io/cornflex) for examples.
 
 ### Container
 
