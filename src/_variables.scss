@@ -9,10 +9,10 @@ $cornflex-cols: 12 !default;
 $cornflex-gutter: 20px !default;
 $cornflex-gutter-half: $cornflex-gutter / 2;
 
-// screen breakpoints (prefixed with '-')
+// screen breakpoints
 $cornflex-breakpoints: (
-  -sm: 768px,
-  -md: 992px,
-  -lg: 1180px,
-  //-xl: 1600px
+  sm: 768px,
+  md: 992px,
+  lg: 1180px,
+  //xl: 1600px
 ) !default;

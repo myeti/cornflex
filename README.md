@@ -1,15 +1,66 @@
 # Cornflex
 
-Lightweight CSS flexbox grid framework (8ko)
+**Modern `css` flexbox grid framework**
+- Build complex layout with minimal code and pain
+- Lightweight - no useless props - only 8ko
+- Use the `flexbox` feature only
+- No vendor prefixes
 
 
-## Rules
+## Install
 
-Include `dist/cornflex.min.css` in your page, see [myeti.github.io/cornflex](https://myeti.github.io/cornflex) for examples.
+
+### css
+
+Download the [latest build](https://github.com/myeti/cornflex/releases) and add `cornflex.min.css` to your `html` page:
+
+```html
+<link rel="stylesheet" href="/path/to/cornflex.min.css" type="text/css" >
+```
+
+### npm
+
+Run `npm install cornflex` and import `cornflex.scss` to your main `scss` file:
+
+```scss
+@import 'path/to/node_modules/cornflex/src/cornflex;
+```
+
+This way, you can override variables used to generate specific data:
+
+```scss
+// number of cols in row
+$cornflex-cols: 12;
+
+// space between cols
+$cornflex-gutter: 20px;
+
+// screen breakpoints
+$cornflex-breakpoints: (
+  sm: 768px,
+  md: 992px,
+  lg: 1180px
+);
+```
+
+
+## Browser support
+
+Cornflex is compatible with recent version of Chrome, Opera, Firefox and Edge.<br>
+*Unfortunately, it might work on IE11...*
+
+
+## Documentation
+
+See examples here: [myeti.github.io/cornflex](https://myeti.github.io/cornflex).
 
 ### Container
 
-`.container(-sm|-md|-lg)`
+Define a max-width for your content based on the breakpoint value and set left and right padding with the gutter value (`20px`).
+
+```
+.container(-sm|-md|-lg)
+```
 
 ```html
 <div class="container-md">
@@ -17,9 +68,13 @@ Include `dist/cornflex.min.css` in your page, see [myeti.github.io/cornflex](htt
 </div>
 ```
 
-### Row and columns
+### Grid
 
-`.row .col-[1..12](-sm|-md|-lg)`
+Let you define a grid of row containing columns with a specific size.
+
+```
+.row .col-[1..12](-sm|-md|-lg)
+```
 
 ```html
 <div class="row">
@@ -30,9 +85,13 @@ Include `dist/cornflex.min.css` in your page, see [myeti.github.io/cornflex](htt
 </div>
 ```
 
-### Row and columns with gutter
+### Gutter
 
-`.row.row-gutter .col-[1..12](-sm|-md|-lg)`
+Add space based on the gutter value between columns.
+
+```
+.row-gutter
+```
 
 ```html
 <div class="row row-gutter">
@@ -43,73 +102,103 @@ Include `dist/cornflex.min.css` in your page, see [myeti.github.io/cornflex](htt
 </div>
 ```
 
-### Justify content
+### Reverse
 
-`.row-[left|center|right|between|around](-sm|-md|-lg)`
+Reverse order for `rtl` languages.
+
+```
+.row-rtl
+```
 
 ```html
-<div class="row row-gutter row-center">
+<div class="row row-gutter row-rtl">
+  <div class="col-12 col-6-sm col-3-md"></div>
+  <div class="col-12 col-6-sm col-3-md"></div>
+  <div class="col-12 col-6-sm col-3-md"></div>
+  <div class="col-12 col-6-sm col-3-md"></div>
+</div>
+```
+
+### Justify
+
+Specify how to horizontally align cols in row.
+
+```
+.row-[left|center|right|between|around](-sm|-md|-lg)
+```
+
+```html
+<div class="row row-gutter row-right row-center-md">
   <div class="col-3"></div>
   <div class="col-3"></div>
 </div>
 ```
 
-### Align items
+### Align
 
-`.row-[top|middle|bottom](-sm|-md|-lg)`
+Specify how to vertically align cols in row.
+
+```
+.row-[top|middle|bottom](-sm|-md|-lg)
+```
 
 ```html
-<div class="row row-gutter row-middle">
+<div class="row row-gutter row-bottom row-middle-md">
   <div class="col-4"></div>
   <div class="col-4"></div>
   <div class="col-4"></div>
 </div>
 ```
 
-### Self-align item
+### Self-align
 
-`.col-[top|middle|bottom](-sm|-md|-lg)`
+Individually specify how to vertically align cols in row.
+
+```
+.col-[top|middle|bottom](-sm|-md|-lg)
+```
 
 ```html
 <div class="row row-gutter">
-  <div class="col-3"></div>
-  <div class="col-3 col-middle"></div>
-  <div class="col-3 col-bottom"></div>
+  <div class="col-4 col-bottom col-top-md"></div>
+  <div class="col-4 col-middle"></div>
+  <div class="col-4 col-top col-bottom-md"></div>
 </div>
 ```
 
 ### Order
 
-`.col-nth-[1..12](-sm|-md|-lg)`
+Re-order cols in row (dot not change the `dom`).
+
+```
+.col-nth-[1..12](-sm|-md|-lg)
+```
 
 ```html
 <div class="row row-gutter">
-  <div class="col-3 col-nth-4">#1</div>
-  <div class="col-3 col-nth-3">#2</div>
-  <div class="col-3 col-nth-2">#3</div>
-  <div class="col-3 col-nth-1">#4</div>
+  <div class="col-3 col-nth-4 col-nth-2-md">#1</div>
+  <div class="col-3 col-nth-3 col-nth-4-md">#2</div>
+  <div class="col-3 col-nth-2 col-nth-1-md">#3</div>
+  <div class="col-3 col-nth-1 col-nth-3-md">#4</div>
 </div>
 ```
 
 ### Shift
 
-`.col-shift-[1..12](-sm|-md|-lg)`
+Shift cols to specific position based on col's size.
+
+```
+.col-shift-[0..12](-sm|-md|-lg)
+```
 
 ```html
 <div class="row row-gutter">
-  <div class="col-3 col-shift-3"></div>
-  <div class="col-3 col-shift-3"></div>
+  <div class="col-2 col-shift-2 col-shift-4-md"></div>
+  <div class="col-2 col-shift-2 col-shift-4-md"></div>
 </div>
 ```
 
 
-## Development
+## Copyright and license
 
-Import `src/cornflex.scss` in your assets to be compiled in your project.
-These default variables can be overwritten :
-- `$cornflex-cols: 12`
-- `$cornflex-gutter: 20px`
-- `$cornflex-breakpoints: (-sm: 768px, -md: 992px, -lg: 1180px)`
-
-
-## :)
+Code copyright 2018 Aymeric Assier. Code released under the [MIT license](https://github.com/myeti/cornflex/blob/master/LICENSE).

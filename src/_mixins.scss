@@ -14,14 +14,20 @@
   @include cornflex-col();
 
   // responsive rules
-  @each $breakpoint, $breakpoint-value in $cornflex-breakpoints {
-    @media (min-width: $breakpoint-value) {
-      @include cornflex-container($breakpoint, $breakpoint-value);
-      @include cornflex-row($breakpoint);
-      @include cornflex-col($breakpoint);
+  @each $bp, $bp-value in $cornflex-breakpoints {
+    @media (min-width: $bp-value) {
+      @include cornflex-container($bp, $bp-value);
+      @include cornflex-row($bp);
+      @include cornflex-col($bp);
     }
   }
 
+}
+
+
+// generate breakpoint suffix based on name
+@function cornflex-breakpoint($bp: null) {
+  @return if($bp, #{'-'+$bp}, null);
 }
 
 
@@ -44,62 +50,65 @@
   .row {
     display: flex;
     flex-wrap: wrap;
+
+    // gutter
+    &-gutter {
+      margin: 0 -#{$cornflex-gutter-half};
+      .col, [class*="col-"] { padding: 0 #{$cornflex-gutter-half} }
+    }
+
+    // reverse
     &-rtl { flex-direction: row-reverse }
   }
+
+  // col
+  .col, [class*="col-"] { flex-grow: 1 }
 
 }
 
 
 // generate container rules for a specific breakpoint
-@mixin cornflex-container($breakpoint: null, $breakpoint-value: 0) {
-  @if($breakpoint-value > 0) {
-    .container#{$breakpoint} { max-width: $breakpoint-value }
+@mixin cornflex-container($bp: null, $bp-value: 0) {
+  @if($bp-value > 0) {
+    $-bp: cornflex-breakpoint($bp);
+    .container#{$-bp} { max-width: $bp-value }
   }
 }
 
 
 // generate row rules for a specific breakpoint
-@mixin cornflex-row($breakpoint: null) {
+@mixin cornflex-row($bp: null) {
+  $-bp: cornflex-breakpoint($bp);
   .row {
 
     // justify
-    &-left#{$breakpoint} { justify-content: flex-start }
-    &-center#{$breakpoint} { justify-content: center }
-    &-right#{$breakpoint} { justify-content: flex-end }
-    &-between#{$breakpoint} { justify-content: space-between }
-    &-around#{$breakpoint} { justify-content: space-around }
+    &-left#{$-bp} { justify-content: flex-start }
+    &-center#{$-bp} { justify-content: center }
+    &-right#{$-bp} { justify-content: flex-end }
+    &-between#{$-bp} { justify-content: space-between }
+    &-around#{$-bp} { justify-content: space-around }
 
     // align
-    &-top#{$breakpoint} { align-items: flex-start }
-    &-middle#{$breakpoint} { align-items: center }
-    &-bottom#{$breakpoint} { align-items: flex-end }
-
-    // gutter
-    &-gutter#{$breakpoint} {
-      margin: 0 -#{$cornflex-gutter-half};
-      .col, [class*="col-"] {
-        padding: 0 $cornflex-gutter-half;
-      }
-    }
+    &-top#{$-bp} { align-items: flex-start }
+    &-middle#{$-bp} { align-items: center }
+    &-bottom#{$-bp} { align-items: flex-end }
 
   }
 }
 
 
 // generate col rules for a specific breakpoint
-@mixin cornflex-col($breakpoint: null) {
+@mixin cornflex-col($bp: null) {
+  $-bp: cornflex-breakpoint($bp);
   .col {
 
     // fluid
-    &#{$breakpoint} {
-      flex-grow: 1;
-      max-width: 100%;
-    }
+    &#{$-bp} { max-width: 100% }
 
     // sized
     @for $i from 1 through $cornflex-cols {
       $col-width: 100% / $cornflex-cols * $i;
-      &-#{$i}#{$breakpoint} {
+      &-#{$i}#{$-bp} {
         flex-basis: $col-width;
         max-width: $col-width;
       }
@@ -107,20 +116,20 @@
 
     // order
     @for $i from 1 through $cornflex-cols {
-      &-nth-#{$i}#{$breakpoint} { order: $i }
+      &-nth-#{$i}#{$-bp} { order: $i }
     }
 
     // shift
     @for $i from 0 through $cornflex-cols {
-      &-shift-#{$i}#{$breakpoint} {
+      &-shift-#{$i}#{$-bp} {
         margin-left: 100% / $cornflex-cols * $i;
       }
     }
 
     // align
-    &-top#{$breakpoint} { align-self: flex-start }
-    &-middle#{$breakpoint} { align-self: center }
-    &-bottom#{$breakpoint} { align-self: flex-end }
+    &-top#{$-bp} { align-self: flex-start }
+    &-middle#{$-bp} { align-self: center }
+    &-bottom#{$-bp} { align-self: flex-end }
 
   }
 }
