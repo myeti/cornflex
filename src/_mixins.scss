@@ -120,7 +120,8 @@
     }
 
     // shift
-    @for $i from 0 through $cornflex-cols {
+    $shift-start: if($bp, 0, 1);
+    @for $i from $shift-start through ($cornflex-cols - 1) {
       &-shift-#{$i}#{$-bp} {
         margin-left: 100% / $cornflex-cols * $i;
       }

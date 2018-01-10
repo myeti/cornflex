@@ -2,7 +2,7 @@
 
 **Modern `css` flexbox grid framework**
 - Build complex layout with minimal code and pain
-- Lightweight - no useless props - only 8ko
+- Lightweight - no useless props - only 7ko
 - Use the `flexbox` feature only
 - No vendor prefixes
 
@@ -188,7 +188,7 @@ Re-order cols in row (dot not change the `dom`).
 Shift cols to specific position based on col's size.
 
 ```
-.col-shift-[0..12](-sm|-md|-lg)
+.col-shift-[0..11](-sm|-md|-lg)
 ```
 
 ```html
