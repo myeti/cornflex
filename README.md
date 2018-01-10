@@ -23,7 +23,7 @@ Download the [latest build](https://github.com/myeti/cornflex/releases) and add 
 Run `npm install cornflex` and import `cornflex.scss` to your main `scss` file:
 
 ```scss
-@import 'path/to/node_modules/cornflex/src/cornflex;
+@import 'path/to/node_modules/cornflex/src/cornflex';
 ```
 
 This way, you can override variables used to generate specific data:
