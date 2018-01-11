@@ -2,7 +2,7 @@
 
 **Modern `css` flexbox grid framework**
 - Build complex layout with minimal code and pain
-- Lightweight - no useless props - only 7ko
+- Lightweight - no useless props - only 8ko
 - Use the `flexbox` feature only
 - No vendor prefixes
 
@@ -195,6 +195,22 @@ Shift cols to specific position based on col's size.
 <div class="row row-gutter">
   <div class="col-2 col-shift-2 col-shift-4-md"></div>
   <div class="col-2 col-shift-2 col-shift-4-md"></div>
+</div>
+```
+
+### Hide
+
+Hide cols from specific breakpoint.
+
+```
+.col-hide(-sm|-md|-lg)
+```
+
+```html
+<div class="row row-gutter">
+  <div class="col-6"></div>
+  <div class="col-6 col-hide-md"></div>
+  <div class="col-hide col-6-md"></div>
 </div>
 ```
 

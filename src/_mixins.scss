@@ -62,7 +62,10 @@
   }
 
   // col
-  .col, [class*="col-"] { flex-grow: 1 }
+  .col, [class*="col-"] {
+    display: flex;
+    flex-grow: 1;
+  }
 
 }
 
@@ -109,6 +112,7 @@
     @for $i from 1 through $cornflex-cols {
       $col-width: 100% / $cornflex-cols * $i;
       &-#{$i}#{$-bp} {
+        @if($bp) { display: flex }
         flex-basis: $col-width;
         max-width: $col-width;
       }
@@ -131,6 +135,9 @@
     &-top#{$-bp} { align-self: flex-start }
     &-middle#{$-bp} { align-self: center }
     &-bottom#{$-bp} { align-self: flex-end }
+
+    // hide
+    &-hide#{$-bp} { display: none }
 
   }
 }
