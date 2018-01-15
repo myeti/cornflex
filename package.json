@@ -1,20 +1,22 @@
 {
   "name": "cornflex",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Modern CSS flexbox grid framework",
   "author": "Aymeric Assier <aymeric.assier@gmail.com>",
   "homepage": "https://myeti.github.io/cornflex",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/myeti/cornflex.git"
+  },
   "licence": "MIT",
-  "main": "gruntfile.js",
+  "keywords": ["sass", "css", "flexbox", "grid"],
   "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-contrib-sass": "^1.0.0",
-    "grunt-contrib-cssmin": "^1.0.2",
-    "grunt-contrib-watch": "^1.0.0",
-    "time-grunt": "^1.4.0"
+    "node-sass": "^4.7.2"
   },
   "scripts": {
-    "start": "grunt live",
-    "build": "grunt build"
+    "start": "npm run build:css -- --watch",
+    "build": "npm run build:css && npm run build:min",
+    "build:css": "node-sass --source-map true src/cornflex.scss dist/cornflex.css",
+    "build:min": "node-sass --output-style compressed src/cornflex.scss dist/cornflex.min.css"
   }
 }

@@ -1,10 +1,157 @@
 /*!
- * Cornflex v1.2
+ * Cornflex v1.3
  * Copyright 2018 Aymeric Assier <aymeric.assier@gmail.com>
  * Licensed under MIT (https://github.com/myeti/cornflex/blob/master/LICENCE)
  */
 
-@import 'variables';
-@import 'mixins';
 
-@include cornflex();
+//
+// VARS
+//
+
+// number of cols in row
+$cornflex-cols: 12 !default;
+
+// space between cols
+$cornflex-gutter: 20px !default;
+$cornflex-gutter-half: $cornflex-gutter / 2;
+
+// screen breakpoints
+$cornflex-breakpoints: (
+  sm: 768px,
+  md: 992px,
+  lg: 1180px
+) !default;
+
+
+//
+// RESPONSIVE MIXIN
+//
+
+@mixin cornflex-respond-to($breakpoint, $width) {
+  @if $breakpoint {
+    @media (min-width: $width) { @content; }
+  }
+  @else { @content; }
+}
+
+
+//
+// BUILD RULES
+//
+
+// build map of breakpoints with mobile first size 0
+$__cornflex-breakpoints: map-merge((null: 0), $cornflex-breakpoints);
+
+// loop on all breakpoint sizes
+@each $breakpoint, $width in $__cornflex-breakpoints {
+  $breakpoint: if($breakpoint, #{'-' + $breakpoint}, null);
+  @include cornflex-respond-to($breakpoint, $width) {
+
+
+    //
+    // BASE
+    //
+
+    @if not $breakpoint {
+
+      // container
+      .container, [class*="container-"] {
+        box-sizing: border-box;
+        padding: 0 $cornflex-gutter;
+        margin: auto;
+      }
+
+      // row
+      .row {
+        box-sizing: border-box;
+        display: flex;
+        flex-wrap: wrap;
+  
+        // gutter
+        &-gutter {
+          margin: 0 -#{$cornflex-gutter-half};
+          .col, [class*="col-"] { padding: 0 #{$cornflex-gutter-half} }
+        }
+  
+        // reverse
+        &-rtl { flex-direction: row-reverse }
+      }
+
+      // col
+      .col, [class*="col-"] {
+        box-sizing: border-box;
+        display: flex;
+        flex-grow: 1; 
+      }
+
+    }
+
+
+    //
+    // CONTAINER
+    //
+
+    // max-width
+    @if $breakpoint {
+      .container#{$breakpoint} { max-width: $width }
+    }
+
+
+    //
+    // ROW
+    //
+
+    // row justify
+    .row-left#{$breakpoint} { justify-content: flex-start }
+    .row-center#{$breakpoint} { justify-content: center }
+    .row-right#{$breakpoint} { justify-content: flex-end }
+    .row-between#{$breakpoint} { justify-content: space-between }
+    .row-around#{$breakpoint} { justify-content: space-around }
+
+    // row align
+    .row-top#{$breakpoint} { align-items: flex-start }
+    .row-middle#{$breakpoint} { align-items: center }
+    .row-bottom#{$breakpoint} { align-items: flex-end }
+
+
+    //
+    // COL
+    //
+
+    // col fluid
+    .col#{$breakpoint} { max-width: 100% }
+
+    // col sized
+    @for $i from 1 through $cornflex-cols {
+      $col-width: 100% / $cornflex-cols * $i;
+      .col-#{$i}#{$breakpoint} {
+        @if($breakpoint) { display: flex }
+        flex-basis: $col-width;
+        max-width: $col-width;
+      }
+    }
+
+    // col order
+    @for $i from 1 through $cornflex-cols {
+      .col-nth-#{$i}#{$breakpoint} { order: $i }
+    }
+
+    // col shift
+    $shift-start: if($breakpoint, 0, 1);
+    @for $i from $shift-start through ($cornflex-cols - 1) {
+      .col-shift-#{$i}#{$breakpoint} {
+        margin-left: 100% / $cornflex-cols * $i;
+      }
+    }
+
+    // col align
+    .col-top#{$breakpoint} { align-self: flex-start }
+    .col-middle#{$breakpoint} { align-self: center }
+    .col-bottom#{$breakpoint} { align-self: flex-end }
+
+    // col hide
+    .col-hide#{$breakpoint} { display: none }
+
+  }
+}

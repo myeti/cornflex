@@ -2,7 +2,7 @@
 
 **Modern `css` flexbox grid framework**
 - Build complex layout with minimal code and pain
-- Lightweight - no useless props - only 8ko
+- Lightweight - no useless props - only 7ko
 - Use the `flexbox` feature only
 - No vendor prefixes
 
@@ -22,11 +22,11 @@ Download the [latest build](https://github.com/myeti/cornflex/releases) and add 
 
 Run `npm install cornflex` and import `cornflex.scss` to your main `scss` file:
 
-```scss
+```css
 @import 'path/to/node_modules/cornflex/src/cornflex';
 ```
 
-This way, you can override variables used to generate specific data:
+This way, you can override variables used to generate specific data (do it **before** importing):
 
 ```scss
 // number of cols in row
@@ -104,7 +104,7 @@ Add space based on the gutter value between columns.
 
 ### Reverse
 
-Reverse order for `rtl` languages.
+Reverse order for right-to-left languages.
 
 ```
 .row-rtl
