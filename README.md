@@ -1,8 +1,8 @@
-# Cornflex
+# Cornflex v1.4
 
 **Modern `css` flexbox grid framework**
 - Build complex layout with minimal code and pain
-- Lightweight - no useless props - only 7ko
+- Lightweight - no useless props - only 8ko
 - Use the `flexbox` feature only
 - No vendor prefixes
 
@@ -73,7 +73,8 @@ Define a max-width for your content based on the breakpoint value and set left a
 Let you define a grid of row containing columns with a specific size.
 
 ```
-.row .col-[1..12](-sm|-md|-lg)
+.row .col(-sm|-md|-lg) -> use remaining space
+.row .col-[1..12](-sm|-md|-lg) -> limit to n/12
 ```
 
 ```html
@@ -185,16 +186,18 @@ Re-order cols in row (dot not change the `dom`).
 
 ### Shift
 
-Shift cols to specific position based on col's size.
+Shift cols using the remaining space or to specific offset.
 
 ```
-.col-shift-[0..11](-sm|-md|-lg)
+.col-shift(-sm|-md|-lg) -> use the remaining space
+.col-shift-[0..11](-sm|-md|-lg) -> to specific col offset
 ```
 
 ```html
 <div class="row row-gutter">
-  <div class="col-2 col-shift-2 col-shift-4-md"></div>
-  <div class="col-2 col-shift-2 col-shift-4-md"></div>
+  <div class="col-2"> 1 </div>
+  <div class="col-2 col-shift-6 col-shift-3-md"> 2 </div>
+  <div class="col-2 col-shift-md"> 3 </div>
 </div>
 ```
 
@@ -208,9 +211,9 @@ Hide cols from specific breakpoint.
 
 ```html
 <div class="row row-gutter">
-  <div class="col-6"></div>
-  <div class="col-6 col-hide-md"></div>
-  <div class="col-hide col-6-md"></div>
+  <div class="col-6"> 1 </div>
+  <div class="col-6 col-hide-md"> 2 </div>
+  <div class="col-hide col-6-md"> 3 </div>
 </div>
 ```
 

@@ -1,5 +1,5 @@
 /*!
- * Cornflex v1.3.1
+ * Cornflex v1.4
  * Copyright 2018 Aymeric Assier <aymeric.assier@gmail.com>
  * Licensed under MIT (https://github.com/myeti/cornflex/blob/master/LICENCE)
  */
@@ -58,7 +58,8 @@ $__cornflex-breakpoints: map-merge((null: 0), $cornflex-breakpoints);
       // container
       .container, [class*="container-"] {
         box-sizing: border-box;
-        padding: 0 $cornflex-gutter;
+        padding-left: $cornflex-gutter;
+        padding-right: $cornflex-gutter;
         margin: auto;
       }
 
@@ -71,7 +72,10 @@ $__cornflex-breakpoints: map-merge((null: 0), $cornflex-breakpoints);
         // gutter
         &-gutter {
           margin: 0 -#{$cornflex-gutter-half};
-          .col, [class*="col-"] { padding: 0 #{$cornflex-gutter-half} }
+          .col, [class*="col-"] {
+            padding-left: $cornflex-gutter-half;
+            padding-right: $cornflex-gutter-half;
+          }
         }
   
         // reverse
@@ -138,6 +142,7 @@ $__cornflex-breakpoints: map-merge((null: 0), $cornflex-breakpoints);
     }
 
     // col shift
+    .col-shift#{$breakpoint} { margin-left: auto }
     $shift-start: if($breakpoint, 0, 1);
     @for $i from $shift-start through ($cornflex-cols - 1) {
       .col-shift-#{$i}#{$breakpoint} {
